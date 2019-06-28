@@ -4,7 +4,7 @@
   "description": "TWRFC Specific tools for reporting from GMS",
   "main": "dist/index.js",
   "dependencies": {
-    "englandrugby-gms-parser": "0.0.1",
+    "englandrugby-gms-parser": "file:../englandrugby-gms-parser-0.0.2.tgz",
     "printf": "^0.5.1"
   },
   "devDependencies": {},

@@ -1,4 +1,4 @@
-import { ClubGMS } from 'englandrugby-gms-tools';
+import { ClubGMS } from 'englandrugby-gms-parser';
 // import { QualifcationTypes } from './Qualifcation';
 // import { Person } from './Person';
 // const MYID = '165676';

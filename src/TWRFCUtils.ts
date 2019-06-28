@@ -8,38 +8,51 @@ export enum TWRFCSchemes {
   vp = 'VP',
   higherEd = 'Higher-Ed',
   youth = 'Youth Player',
+  social = 'Social Member',
   other = 'Other'
 }
 
 export class TWRFCUtils {
 
   static scoreMembership(person: Person, membership: Membership): number {
-    let scheme = membership.scheme;
-    let active = membership.isActive();
+    let scheme = TWRFCUtils.normaliseScheme(membership.scheme);
+    let activeScore = membership.isActive() ? 100 : 0; // An active membership always trumps and expired one
     let score = 0;
-    if (scheme === 'Senior Player' && active) {
-      score = 9;
-    } else if (scheme.match(/family/i) && active) {
-      score = 8;
-    } else if (scheme === 'Veteran (Occasional Player)' && active) {
-      score = 7;
-    } else if (scheme === 'Concession' && active) {
-      score = 6;
-    } else if (scheme === 'Vice President (Social)' && active) {
-      score = 5;
-    } else if (scheme === 'Higher Education (Occasional Player)' && active) {
-      score = 4;
-    } else if (scheme == 'Youth Player' && active) {
-      score = 3;
+    switch (scheme) {
+      case TWRFCSchemes.senior:
+        score = 9
+        break;;
+      case TWRFCSchemes.family:
+        score = 8
+        break;;
+      case TWRFCSchemes.vets:
+        score = 7
+        break;;
+      case TWRFCSchemes.concession:
+        score = 6
+        break;;
+      case TWRFCSchemes.vp:
+        score = 5
+        break;;
+      case TWRFCSchemes.higherEd:
+        score = 4
+        break;;
+      case TWRFCSchemes.youth:
+        score = 3
+        break;;
+      case TWRFCSchemes.social:
+        score = 2
+        break;;
+      case TWRFCSchemes.other:
+        score = 1
+        break;;
     }
-    return score;
+    return score + activeScore;
   }
 
   static normaliseScheme(scheme: string): string {
     if (scheme === 'Senior Player') {
       return TWRFCSchemes.senior;
-    } else if (scheme.match(/family/i)) {
-      return TWRFCSchemes.family;
     } else if (scheme === 'Veteran (Occasional Player)') {
       return TWRFCSchemes.vets;
     } else if (scheme === 'Concession') {
@@ -48,8 +61,12 @@ export class TWRFCUtils {
       return TWRFCSchemes.vp;
     } else if (scheme === 'Higher Education (Occasional Player)') {
       return TWRFCSchemes.higherEd;
-    } else if (scheme == 'Youth Player') {
+    } else if (scheme === 'Youth Player') {
       return TWRFCSchemes.youth;
+    } else if (scheme.match(/family/i)) {
+      return TWRFCSchemes.family;
+    } else if (scheme.match(/social/i)) {
+      return TWRFCSchemes.higherEd;
     } else {
       return TWRFCSchemes.other;
     }

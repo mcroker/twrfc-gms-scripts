@@ -2,7 +2,7 @@ import { ClubGMS } from 'englandrugby-gms-parser';
 import { TWRFCUtils, TWRFCSchemes } from './TWRFCUtils';
 const printf = require('printf');
 
-const TRACKEDSCHEMA = [
+const TRACKEDSCHEME = [
   TWRFCSchemes.senior,
   TWRFCSchemes.family,
   TWRFCSchemes.vets,
@@ -10,6 +10,7 @@ const TRACKEDSCHEMA = [
   TWRFCSchemes.vp,
   TWRFCSchemes.higherEd,
   TWRFCSchemes.youth,
+  TWRFCSchemes.social,
   TWRFCSchemes.other
 ];
 
@@ -18,61 +19,50 @@ declare interface CountArray { [name: string]: number[]; };
 ClubGMS.createFromGMSExports('./data/people.csv', './data/members.csv')
   .then((club: ClubGMS) => {
 
+    // Initialise and zero arrays
     let countallkids: CountArray = {};
     let countmemkids: CountArray = {};
-    let countalladult: CountArray = {};
-    let countmemadult: CountArray = {};
-    for (let scheme of TRACKEDSCHEMA) {
+    for (let scheme of TRACKEDSCHEME) {
       countallkids[scheme] = [0, 0, 0, 0, 0, 0];
       countmemkids[scheme] = [0, 0, 0, 0, 0, 0];
-      countalladult[scheme] = [0, 0, 0, 0, 0, 0];
-      countmemadult[scheme] = [0, 0, 0, 0, 0, 0];
     }
 
-    for (var family of club.families) {
-      let cmem = family.countChildren();
-      let cnon = family.countChildren(false) - cmem;
-      let amem = family.countAdults();
-      let anon = family.countAdults(false) - amem;
-      if ((cmem + amem) > 0) {
-        let primary = family.getPrimaryData(TWRFCUtils.scoreMembership);
-        let mainscheme = (undefined !== primary.membership) ? TWRFCUtils.normaliseScheme(primary.membership.scheme) : TWRFCSchemes.senior;
-        countallkids[mainscheme][cmem + cnon] += 1;
-        countmemkids[mainscheme][cmem] += 1;
-        countalladult[mainscheme][amem + anon] += 1;
-        countmemadult[mainscheme][amem] += 1;
-      }
-    } // Each Family
+    // Loop through families with at least one active member
+    // create a tally (by scheme) of the number of families with X children with/without membership
+    for (var family of club.families.filter((item) => { return item.hasActiveMember() })) {
+      let primary = family.getPrimaryData(TWRFCUtils.scoreMembership);
+      let mainscheme = (undefined !== primary.membership) ? TWRFCUtils.normaliseScheme(primary.membership.scheme) : TWRFCSchemes.other;
+      countmemkids[mainscheme][family.countChildren()] += 1;
+      countallkids[mainscheme][family.countChildren(false)] += 1;
+    } 
 
-    // Only members
-    console.log('Members ==========');
-    process.stdout.write(printf('%-20s %5s %5s %5s %5s %5s\n', '', 0, 1, 2, 3, 4, 5));
-    console.log('---------------------------------------------------');
-    for (let bucket of TRACKEDSCHEMA) {
-      process.stdout.write(printf('%-20s %5s %5s %5s %5s %5s\n',
-        bucket,
-        countmemkids[bucket][0],
-        countmemkids[bucket][1],
-        countmemkids[bucket][2],
-        countmemkids[bucket][3],
-        countmemkids[bucket][4],
-        countmemkids[bucket][5]
+    // Output text
+    const TITLEFORMAT = '\n### Distribution of #children in family (%s)\n\n';
+    const HRULE = '---------------------------------------------------------\n';
+    const OUTFORMAT = '%-20s %5s %5s %5s %5s %5s %5s\n';
+    process.stdout.write(printf(TITLEFORMAT + OUTFORMAT + HRULE, 'Members only', '', 0, 1, 2, 3, 4, 5));
+    for (let scheme of TRACKEDSCHEME) {
+      process.stdout.write(printf(OUTFORMAT,
+        scheme,
+        countmemkids[scheme][0],
+        countmemkids[scheme][1],
+        countmemkids[scheme][2],
+        countmemkids[scheme][3],
+        countmemkids[scheme][4],
+        countmemkids[scheme][5]
       ));
     }
 
-    console.log('');
-    console.log('Everybody ==========');
-    process.stdout.write(printf('%-20s %5s %5s %5s %5s %5s\n', '', 0, 1, 2, 3, 4, 5));
-    console.log('---------------------------------------------------');
-    for (let bucket of TRACKEDSCHEMA) {
-      process.stdout.write(printf('%-20s %5s %5s %5s %5s %5s\n',
-        bucket,
-        countallkids[bucket][0],
-        countallkids[bucket][1],
-        countallkids[bucket][2],
-        countallkids[bucket][3],
-        countallkids[bucket][4],
-        countallkids[bucket][5]
+    process.stdout.write(printf(TITLEFORMAT + OUTFORMAT + HRULE, 'All children', '', 0, 1, 2, 3, 4, 5));
+    for (let scheme of TRACKEDSCHEME) {
+      process.stdout.write(printf(OUTFORMAT,
+        scheme,
+        countallkids[scheme][0],
+        countallkids[scheme][1],
+        countallkids[scheme][2],
+        countallkids[scheme][3],
+        countallkids[scheme][4],
+        countallkids[scheme][5]
       ));
     }
 
