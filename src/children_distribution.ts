@@ -1,4 +1,4 @@
-import { ClubGMS } from 'englandrugby-gms-tools';
+import { ClubGMS } from 'englandrugby-gms-parser';
 import { TWRFCUtils, TWRFCSchemes } from './TWRFCUtils';
 const printf = require('printf');
 

@@ -1,4 +1,4 @@
-import { Membership, Person } from 'englandrugby-gms-tools';
+import { Membership, Person } from 'englandrugby-gms-parser';
 
 export enum TWRFCSchemes {
   senior = 'Senior Player',
