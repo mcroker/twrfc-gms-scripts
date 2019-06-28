@@ -1,0 +1,17 @@
+{
+  "name": "twrfc-scripts",
+  "version": "0.0.1",
+  "description": "TWRFC Specific tools for reporting from GMS",
+  "main": "dist/index.js",
+  "dependencies": {
+    "englandrugby-gms-tools": "file:../englandrugby-gms-tools-0.0.3.tgz",
+    "printf": "^0.5.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Martin Croker",
+  "license": "ISC"
+}
