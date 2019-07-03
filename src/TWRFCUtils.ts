@@ -45,6 +45,8 @@ export class TWRFCUtils {
       case TWRFCSchemes.social:
         score = 2
         break;;
+      case TWRFCSchemes.volunteer:
+      case TWRFCSchemes.associate:
       case TWRFCSchemes.other:
         score = 1
         break;;
