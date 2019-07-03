@@ -50,7 +50,7 @@ export class TWRFCUtils {
     return score + activeScore;
   }
 
-  static normaliseScheme(scheme: string): string {
+  static normaliseScheme(scheme: string): TWRFCSchemes {
     if (scheme === 'Senior Player') {
       return TWRFCSchemes.senior;
     } else if (scheme === 'Veteran (Occasional Player)') {
