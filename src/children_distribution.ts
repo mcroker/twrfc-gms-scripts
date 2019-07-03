@@ -14,6 +14,15 @@ const TRACKEDSCHEME = [
   TWRFCSchemes.other
 ];
 
+function consolidateSchemes(scheme: string): TWRFCSchemes {
+  let normalisedScheme = TWRFCUtils.normaliseScheme(scheme);
+  if (TRACKEDSCHEME.includes(normalisedScheme)) {
+    return normalisedScheme 
+  } else {
+    return TWRFCSchemes.other
+  }
+}
+
 declare interface CountArray { [name: string]: number[]; };
 
 ClubGMS.createFromGMSExports('./data/people.csv', './data/members.csv')
@@ -31,7 +40,7 @@ ClubGMS.createFromGMSExports('./data/people.csv', './data/members.csv')
     // create a tally (by scheme) of the number of families with X children with/without membership
     for (var family of club.families.filter((item) => { return item.hasActiveMember() })) {
       let primary = family.getPrimaryData(TWRFCUtils.scoreMembership);
-      let mainscheme = (undefined !== primary.membership) ? TWRFCUtils.normaliseScheme(primary.membership.scheme) : TWRFCSchemes.other;
+      let mainscheme = (undefined !== primary.membership) ? consolidateSchemes(primary.membership.scheme) : TWRFCSchemes.other;
       countmemkids[mainscheme][family.countChildren()] += 1;
       countallkids[mainscheme][family.countChildren(false)] += 1;
     } 
@@ -39,7 +48,7 @@ ClubGMS.createFromGMSExports('./data/people.csv', './data/members.csv')
     // Output text
     const TITLEFORMAT = '\n### Distribution of #children in family (%s)\n\n';
     const HRULE = '---------------------------------------------------------\n';
-    const OUTFORMAT = '%-20s %5s %5s %5s %5s %5s %5s\n';
+    const OUTFORMAT = '%-22s %5s %5s %5s %5s %5s %5s\n';
     process.stdout.write(printf(TITLEFORMAT + OUTFORMAT + HRULE, 'Members only', '', 0, 1, 2, 3, 4, 5));
     for (let scheme of TRACKEDSCHEME) {
       process.stdout.write(printf(OUTFORMAT,
