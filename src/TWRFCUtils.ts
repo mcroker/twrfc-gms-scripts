@@ -1,6 +1,6 @@
 import { Membership, Person } from 'englandrugby-gms-parser';
 
-export enum TWRFCSchemes {
+export enum TWRFCScheme {
   senior = 'Senior Player',
   family = 'Parent (Family Member)',
   vets = 'Vets Player',
@@ -21,63 +21,63 @@ export class TWRFCUtils {
     let activeScore = membership.isActive() ? 100 : 0; // An active membership always trumps and expired one
     let score = 0;
     switch (scheme) {
-      case TWRFCSchemes.senior:
+      case TWRFCScheme.senior:
         score = 9
         break;;
-      case TWRFCSchemes.family:
+      case TWRFCScheme.family:
         score = 8
         break;;
-      case TWRFCSchemes.vets:
+      case TWRFCScheme.vets:
         score = 7
         break;;
-      case TWRFCSchemes.concession:
+      case TWRFCScheme.concession:
         score = 6
         break;;
-      case TWRFCSchemes.vp:
+      case TWRFCScheme.vp:
         score = 5
         break;;
-      case TWRFCSchemes.higherEd:
+      case TWRFCScheme.higherEd:
         score = 4
         break;;
-      case TWRFCSchemes.youth:
+      case TWRFCScheme.youth:
         score = 3
         break;;
-      case TWRFCSchemes.social:
+      case TWRFCScheme.social:
         score = 2
         break;;
-      case TWRFCSchemes.volunteer:
-      case TWRFCSchemes.associate:
-      case TWRFCSchemes.other:
+      case TWRFCScheme.volunteer:
+      case TWRFCScheme.associate:
+      case TWRFCScheme.other:
         score = 1
         break;;
     }
     return score + activeScore;
   }
 
-  static normaliseScheme(scheme: string): TWRFCSchemes {
+  static normaliseScheme(scheme: string): TWRFCScheme {
     if (scheme === 'Senior Player') {
-      return TWRFCSchemes.senior;
+      return TWRFCScheme.senior;
     } else if (scheme === 'Veteran (Occasional Player)') {
-      return TWRFCSchemes.vets;
+      return TWRFCScheme.vets;
     } else if (scheme === 'Concession') {
-      return TWRFCSchemes.concession;
+      return TWRFCScheme.concession;
     } else if (scheme === 'Vice President (Social)') {
-      return TWRFCSchemes.vp;
+      return TWRFCScheme.vp;
     } else if (scheme === 'Higher Education (Occasional Player)') {
-      return TWRFCSchemes.higherEd;
+      return TWRFCScheme.higherEd;
     } else if (scheme === 'Youth Player') {
-      return TWRFCSchemes.youth;
+      return TWRFCScheme.youth;
     } else if (scheme.match(/family/i)) {
-      return TWRFCSchemes.family;
+      return TWRFCScheme.family;
     } else if (scheme.match(/social/i)) {
-      return TWRFCSchemes.higherEd;
+      return TWRFCScheme.higherEd;
     } else if (scheme === 'Associate') {
-      return TWRFCSchemes.associate;
+      return TWRFCScheme.associate;
     } else if (scheme === 'Coach/Volunteer') {
-      return TWRFCSchemes.volunteer;
+      return TWRFCScheme.volunteer;
     } else {
       console.log('WARNING: Scheme ' + scheme + ' not recognised.');
-      return TWRFCSchemes.other;
+      return TWRFCScheme.other;
     }
   }
 

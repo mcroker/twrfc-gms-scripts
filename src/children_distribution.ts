@@ -1,25 +1,25 @@
 import { ClubGMS } from 'englandrugby-gms-parser';
-import { TWRFCUtils, TWRFCSchemes } from './TWRFCUtils';
+import { TWRFCUtils, TWRFCScheme } from './TWRFCUtils';
 const printf = require('printf');
 
 const TRACKEDSCHEME = [
-  TWRFCSchemes.senior,
-  TWRFCSchemes.family,
-  TWRFCSchemes.vets,
-  TWRFCSchemes.concession,
-  TWRFCSchemes.vp,
-  TWRFCSchemes.higherEd,
-  TWRFCSchemes.youth,
-  TWRFCSchemes.social,
-  TWRFCSchemes.other
+  TWRFCScheme.senior,
+  TWRFCScheme.family,
+  TWRFCScheme.vets,
+  TWRFCScheme.concession,
+  TWRFCScheme.vp,
+  TWRFCScheme.higherEd,
+  TWRFCScheme.youth,
+  TWRFCScheme.social,
+  TWRFCScheme.other
 ];
 
-function consolidateSchemes(scheme: string): TWRFCSchemes {
+function consolidateSchemes(scheme: string): TWRFCScheme {
   let normalisedScheme = TWRFCUtils.normaliseScheme(scheme);
   if (TRACKEDSCHEME.includes(normalisedScheme)) {
     return normalisedScheme 
   } else {
-    return TWRFCSchemes.other
+    return TWRFCScheme.other
   }
 }
 
@@ -40,7 +40,7 @@ ClubGMS.createFromGMSExports('./data/people.csv', './data/members.csv')
     // create a tally (by scheme) of the number of families with X children with/without membership
     for (var family of club.families.filter((item) => { return item.hasActiveMember() })) {
       let primary = family.getPrimaryData(TWRFCUtils.scoreMembership);
-      let mainscheme = (undefined !== primary.membership) ? consolidateSchemes(primary.membership.scheme) : TWRFCSchemes.other;
+      let mainscheme = (undefined !== primary.membership) ? consolidateSchemes(primary.membership.scheme) : TWRFCScheme.other;
       countmemkids[mainscheme][family.countChildren()] += 1;
       countallkids[mainscheme][family.countChildren(false)] += 1;
     } 
