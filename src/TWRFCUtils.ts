@@ -2,13 +2,15 @@ import { Membership, Person } from 'englandrugby-gms-parser';
 
 export enum TWRFCSchemes {
   senior = 'Senior Player',
-  family = 'Family Member',
+  family = 'Parent (Family Member)',
   vets = 'Vets Player',
   concession = 'Concession',
   vp = 'VP',
   higherEd = 'Higher-Ed',
   youth = 'Youth Player',
   social = 'Social Member',
+  associate = 'Associate',
+  volunteer = 'Coach/Volunteer',
   other = 'Other'
 }
 
@@ -67,7 +69,12 @@ export class TWRFCUtils {
       return TWRFCSchemes.family;
     } else if (scheme.match(/social/i)) {
       return TWRFCSchemes.higherEd;
+    } else if (scheme === 'Associate') {
+      return TWRFCSchemes.associate;
+    } else if (scheme === 'Coach/Volunteer') {
+      return TWRFCSchemes.volunteer;
     } else {
+      console.log('WARNING: Scheme ' + scheme + ' not recognised.');
       return TWRFCSchemes.other;
     }
   }

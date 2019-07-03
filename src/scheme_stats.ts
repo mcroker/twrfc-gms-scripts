@@ -6,17 +6,19 @@ const printf = require('printf');
 ClubGMS.createFromGMSExports('./data/people.csv', './data/members.csv')
     .then((club: ClubGMS) => {
 
-        const OUTFORMAT = '%-20s %5s\n';
-        process.stdout.write(printf(OUTFORMAT,
+        const OUTFORMAT = '%-22s %5s\n';
+        const HR = '----------------------------\n'
+
+        process.stdout.write(printf(OUTFORMAT + HR,
             'Scheme',
             '#Mem'
         ));
-        process.stdout.write('--------------------------\n');
 
         for (let scheme of club.getNormalisedSchemes(TWRFCUtils.normaliseScheme)) {
+            let activeMembers = scheme.getCountActiveMembers();
             process.stdout.write(printf(OUTFORMAT,
                 scheme.name,
-                scheme.getCountActiveMembers()
+                activeMembers
             ));
         }
 
