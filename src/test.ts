@@ -24,4 +24,9 @@ ClubGMS.createFromGMSExports('./data/people.csv', './data/members.csv')
     let coaches =club.findPeopleByMembershipScheme(/Coach/);
     console.log(coaches.length);
 
+    for (let person of club.getPeople()) {
+     // person.getAgeAtStartOfSeason("2019");
+      console.log(person.getName(), person.title, person.ageAtStartOfSeason, person.DOB, person.getInferredGender(), person.getAgeGrade());
+    }
+
   });
