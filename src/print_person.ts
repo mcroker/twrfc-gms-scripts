@@ -1,8 +1,8 @@
 import { ClubGMS } from 'englandrugby-gms-parser';
 
-const MYID = '165676';
+const PERSONID = process.argv[2];
 
-ClubGMS.createFromGMSExports('./data/people.csv', './data/members.csv')
+ClubGMS.createFromDirectory()
   .then((club: ClubGMS) => {
-    console.log(club.findPersonById(MYID))
+    console.log(club.findPersonById(PERSONID))
   })

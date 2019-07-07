@@ -3,7 +3,7 @@ import { TWRFCUtils } from './TWRFCUtils';
 
 const printf = require('printf');
 
-ClubGMS.createFromGMSExports('./data/people.csv', './data/members.csv')
+ClubGMS.createFromDirectory()
     .then((club: ClubGMS) => {
 
         const OUTFORMAT = '%-22s %5s\n';
@@ -15,10 +15,9 @@ ClubGMS.createFromGMSExports('./data/people.csv', './data/members.csv')
         ));
 
         for (let scheme of club.getNormalisedSchemes(TWRFCUtils.normaliseScheme)) {
-            let activeMembers = scheme.getCountActiveMembers();
             process.stdout.write(printf(OUTFORMAT,
                 scheme.name,
-                activeMembers
+                scheme.getCountActiveMembers()
             ));
         }
 

@@ -1,10 +1,8 @@
-import { ClubGMS } from 'englandrugby-gms-parser';
+import { ClubGMS, AgeGrade } from 'englandrugby-gms-parser';
 
-ClubGMS.createFromGMSExports('./data/people.csv', './data/members.csv')
+ClubGMS.createFromDirectory()
   .then((club: ClubGMS) => {
-    for (var person of club.getPeople().filter((item) => {
-      return (undefined !== item.ageAtStartOfSeason && item.ageAtStartOfSeason < 6 && item.ageAtStartOfSeason >= 4)
-    })) {
+    for (var person of club.findPeopleByAgeGrade(AgeGrade.under6)) {
        console.log(person.getName(), person.getContactEmails())
     } 
 

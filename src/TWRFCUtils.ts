@@ -1,4 +1,22 @@
-import { Membership, Person } from 'englandrugby-gms-parser';
+import { Membership, Person, AgeGrade } from 'englandrugby-gms-parser';
+
+export const TWRFCAgeGrades = [
+ AgeGrade.under6,
+ AgeGrade.under7,
+ AgeGrade.under8,
+ AgeGrade.under9,
+ AgeGrade.under10,
+ AgeGrade.under11,
+ AgeGrade.under12,
+ AgeGrade.under13,
+ AgeGrade.under14,
+ AgeGrade.under15,
+ AgeGrade.under16,
+ AgeGrade.colts,
+ AgeGrade.under13ladies,
+ AgeGrade.under15ladies,
+ AgeGrade.under18ladies
+]
 
 export enum TWRFCScheme {
   senior = 'Senior Player',

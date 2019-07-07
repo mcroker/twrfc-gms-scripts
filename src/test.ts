@@ -3,7 +3,7 @@ import { ClubGMS } from 'englandrugby-gms-parser';
 // import { Person } from './Person';
 // const MYID = '165676';
 
-ClubGMS.createFromGMSExports('./data/people.csv', './data/members.csv')
+ClubGMS.createFromDirectory()
   .then((club: ClubGMS) => {
 
     // Find by membership schmee
@@ -21,11 +21,11 @@ ClubGMS.createFromGMSExports('./data/people.csv', './data/members.csv')
     }
     */
 
-    let coaches =club.findPeopleByMembershipScheme(/Coach/);
+    let coaches = club.findPeopleByMembershipScheme(/Coach/);
     console.log(coaches.length);
 
     for (let person of club.getPeople()) {
-     // person.getAgeAtStartOfSeason("2019");
+      // person.getAgeAtStartOfSeason("2019");
       console.log(person.getName(), person.title, person.ageAtStartOfSeason, person.DOB, person.getInferredGender(), person.getAgeGrade());
     }
 

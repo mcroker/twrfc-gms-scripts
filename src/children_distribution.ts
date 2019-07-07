@@ -25,7 +25,7 @@ function consolidateSchemes(scheme: string): TWRFCScheme {
 
 declare interface CountArray { [name: string]: number[]; };
 
-ClubGMS.createFromGMSExports('./data/people.csv', './data/members.csv')
+ClubGMS.createFromDirectory()
   .then((club: ClubGMS) => {
 
     // Initialise and zero arrays
