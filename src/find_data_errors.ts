@@ -30,10 +30,28 @@ ClubGMS.createFromDirectory()
         for (let member of club.findPeopleByMembershipScheme(/Family/)) {
             if (member.isChild()) {
                 reportDataError(member, 'Has family membership but is a child');
-            } else if (member.getChildren().length === 0) {
-                reportDataError(member, 'Has family membership but no children');
+            } else {
+                if (member.getChildren().length === 0) {
+                    reportDataError(member, 'Has family membership but no children');
+                }
+                for (let child of member.getChildren()) {
+                    if (!child.isMember) {
+                        reportDataError(child, 'Is not a youth member but parent is a family member');
+                    }
+                }
             }
+        }
 
+        for (let member of club.findPeopleByMembershipScheme(/Senior/)) {
+            if (member.isChild()) {
+                reportDataError(member, 'Has senior membership but is a child');
+            } else {
+                for (let child of member.getChildren()) {
+                    if (!child.isMember) {
+                        reportDataError(child, 'Is not a youth member but parent is a senior member');
+                    }
+                }
+            }
         }
 
     })

@@ -1,21 +1,21 @@
 import { Membership, Person, AgeGrade } from 'englandrugby-gms-parser';
 
 export const TWRFCAgeGrades = [
- AgeGrade.under6,
- AgeGrade.under7,
- AgeGrade.under8,
- AgeGrade.under9,
- AgeGrade.under10,
- AgeGrade.under11,
- AgeGrade.under12,
- AgeGrade.under13,
- AgeGrade.under14,
- AgeGrade.under15,
- AgeGrade.under16,
- AgeGrade.colts,
- AgeGrade.under13ladies,
- AgeGrade.under15ladies,
- AgeGrade.under18ladies
+  AgeGrade.under6,
+  AgeGrade.under7,
+  AgeGrade.under8,
+  AgeGrade.under9,
+  AgeGrade.under10,
+  AgeGrade.under11,
+  AgeGrade.under12,
+  AgeGrade.under13,
+  AgeGrade.under14,
+  AgeGrade.under15,
+  AgeGrade.under16,
+  AgeGrade.colts,
+  AgeGrade.under13ladies,
+  AgeGrade.under15ladies,
+  AgeGrade.under18ladies
 ]
 
 export enum TWRFCScheme {
@@ -97,6 +97,30 @@ export class TWRFCUtils {
       console.log('WARNING: Scheme ' + scheme + ' not recognised.');
       return TWRFCScheme.other;
     }
+  }
+
+  static getCoachEmails(ageGrades: string[]): string {
+    let emails: string[] = [];
+    for (const agegrade of ageGrades) {
+      switch (agegrade) {
+        case 'U6': emails.push('simonhbeamish@hotmail.com, suzannegeorge@live.co.uk'); break;
+        case 'U7': emails.push('rodneyalanfraser@gmail.com, steve@idcband.com'); break;
+        case 'U8': emails.push('Natalie.Church@live.co.uk, alex-nicholson@live.co.uk'); break;
+        case 'U9': emails.push('matthewgeorge@gmail.com'); break;
+        case 'U10': emails.push('richardbains@hotmail.com'); break;
+        case 'U11': emails.push('Matt@idcband.com'); break;
+        case 'U12': emails.push('pjd6871@blueyonder.co.uk, mikerigby@me.com'); break;
+        case 'U13': emails.push('laurence.twrfcrugby@gmail.com'); break;
+        case 'U14': emails.push('n.vano@btopenworld.com'); break;
+        case 'U15': emails.push('teammanager@gmail.com'); break;
+        case 'U16': emails.push('elainewalesmith@gmail.com'); break;
+        case 'U17': emails.push('andrew@acunningham.co.uk'); break;
+        case 'U13W': emails.push('symz3@hotmail.com, tammy.samuel@googlemail.com'); break;
+        case 'U15W': emails.push('symz3@hotmail.com'); break;
+        case 'U18W': emails.push('symz3@hotmail.com, Paul.Miles@broadspiretpa.co.uk'); break;
+      }
+    }
+    return emails.join(', ');
   }
 
 }

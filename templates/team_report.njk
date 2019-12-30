@@ -1,0 +1,30 @@
+<H1>{{ agegrade }} Membership Report</H1>
+
+<H2>Stats</H2>
+<TABLE>
+    <TR></TD>In GMS</TD><TD colspan=2>{{ stats.eligable }}</TD></TR>
+    <TR></TD>Members</TD><TD>{{ stats.activeMembers }}</TD><TD>({{ stats.pctActiveMembers | int }}%)</TD></TR>
+    <TR></TD>Registered</TD><TD>{{ stats.registeredMembers }}</TD><TD>({{ stats.pctRegisteredMembers | int }}%)</TD></TR>
+</TABLE>
+
+<H2>Individuals</H2>
+<TABLE>
+    <THEAD>
+        <TD>RFU ID</TD>
+        <TD>DOB</TD>
+        <TD>Name</TD>
+        <TD>Member?</TD>
+        <TD>Registered?</TD>
+    </THEAD>
+    <TBODY>
+    {% for person in club.findPeopleByAgeGrade(agegrade, false) %}
+        <TR>
+            <TD>{{ person.rfuid }}</TD>
+            <TD>{{ person.DOB.toLocaleDateString(undefined, { dateStyle: 'short' } ) }}</TD>
+            <TD>{{ person.getName() }}</TD>
+            <TD>{{ person | ismember }}</TD>
+            <TD>{{ person | isplayer }}</TD>
+        </TR>
+    {% endfor %}
+    </TBODY>
+</TABLE>
