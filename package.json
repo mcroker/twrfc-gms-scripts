@@ -10,7 +10,7 @@
     "englandrugby-gms-parser": "file:../englandrugby-gms-parser-0.0.3.tgz",
     "glob": "^7.1.4",
     "glob-promise": "^3.4.0",
-    "nodemailer": "^6.3.0",
+    "nodemailer": "^6.4.16",
     "nunjucks": "^3.2.0",
     "printf": "^0.5.1",
     "typescript": "^3.5.2"
